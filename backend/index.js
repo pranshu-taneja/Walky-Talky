@@ -11,9 +11,6 @@ import Room from "./models/Rooms.js";
 //------------------- all the variables or containers -------------------
 const ROOM_TIMEOUT = 10000;
 const activeRooms = {
-  // _one_:{
-  //   clients: new Set()
-  // }
 };
 
 const newRoom = new Room({
@@ -22,12 +19,6 @@ const newRoom = new Room({
   status: "active",
 });
 //------------------- all the variables or containers -------------------
-
-async function DeactivateRoom(roomName) {
-  const res = await fetch(`http://localhost:3000/api/killroom/${roomName}`);
-  const msg = await res.json();
-  console.log(msg);
-}
 
 //------------------- Intializing the instance of imports -------------------
 const app = express();
@@ -103,6 +94,13 @@ io.on("connection", (socket) => {
   });
 });
 //------------------- Socket Events and connecting the client -------------------
+
+
+async function DeactivateRoom(roomName) {
+  const res = await fetch(`https://${process.env.VERCEL_URL}/api/killroom/${roomName}`);
+  const msg = await res.json();
+  console.log(msg);
+}
 
 //------------------- API Endpoints -------------------
 app.get("/api/getroom", async (req, res) => {
