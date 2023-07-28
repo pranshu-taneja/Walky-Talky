@@ -6,7 +6,7 @@ import { config } from "dotenv";
 import { v4 as uuidv4 } from "uuid";
 import cors from "cors";
 import mongoose from "mongoose";
-import Room from "./models/Rooms.js";
+import Room from "../models/Rooms.js";
 
 //------------------- all the variables or containers -------------------
 const ROOM_TIMEOUT = 10000;
