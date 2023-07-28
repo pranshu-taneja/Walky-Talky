@@ -27,6 +27,7 @@ app.use(morgan("dev"));
 app.use(cors());
 const server = http.createServer(app);
 const port = process.env.PORT;
+const MONGO_URL = process.env.MONGO_URL;
 const io = new Server(server, {
   cors: {
     origin: "*",
@@ -191,11 +192,33 @@ function funRun() {
 // }, 3000);
 //------------------- Analyzing and debugging  -------------------
 
+
+function connectDB(){
+  try{
+    mongoose.connect(MONGO_URL,{
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }).then(() => {
+      console.log("Connected to Mongodb");
+    });
+  }
+  catch(err){
+    console.error(err);
+    setTimeout(connectDB, 1000); // Retry connection after delay
+  }
+}
 //------------------- Starting the Server -------------------
-server.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-  mongoose.connect(process.env.MONGO_URL).then(() => {
-    console.log("Connected to Mongodb");
-  });
-});
+function startServer(){
+  try{
+    connectDB();
+    server.listen(port, () => {
+      console.log(`Server listening on port ${port}`);
+    });
+  }  
+  catch(err){
+    console.error(err);
+  }
+}
 //------------------- Starting the Server -------------------
+
+startServer();
