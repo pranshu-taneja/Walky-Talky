@@ -174,7 +174,7 @@ app.get("/api/createroom", async (req, res) => {
   res.send(data);
 });
 
-app.get("/api", (req, res) => {
+app.get(['/api', '/'], (req, res) => {
   res.send("<h1>Server is working Fine!!🚀</h1>");
 });
 
