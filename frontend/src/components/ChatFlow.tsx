@@ -13,6 +13,7 @@ export default function ChatFlow() {
   const [RoomActive, setRoomActive] = useState("active");
 
   const { roomId } = useParams();
+  // const proxyURL = "https://walky-talky-omega.vercel.app"
   const proxyURL = "http://localhost:3000"
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export default function ChatFlow() {
 
   useEffect(() => {
     function connectServer() {
-      const newSocket = io("http://localhost:3000"); // Replace with your server URL
+      const newSocket = io(proxyURL); // Replace with your server URL
       setSocket(newSocket);
     }
 
