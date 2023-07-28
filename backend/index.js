@@ -194,7 +194,7 @@ function funRun() {
 //------------------- Starting the Server -------------------
 server.listen(port, () => {
   console.log(`Server listening on port ${port}`);
-  mongoose.connect("mongodb://127.0.0.1:27017/test").then(() => {
+  mongoose.connect(process.env.MONGO_URL).then(() => {
     console.log("Connected to Mongodb");
   });
 });
