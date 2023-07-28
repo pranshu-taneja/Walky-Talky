@@ -8,6 +8,11 @@ import cors from "cors";
 import mongoose from "mongoose";
 import Room from "../models/Rooms.js";
 
+//used for __dirname as in commmon js modules
+import * as url from 'url';
+import path from 'path';
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
 //------------------- all the variables or containers -------------------
 const ROOM_TIMEOUT = 10000;
 const activeRooms = {
@@ -23,6 +28,13 @@ const newRoom = new Room({
 //------------------- Intializing the instance of imports -------------------
 const app = express();
 config();
+
+
+
+// adding frontend build
+app.use(express.static(path.join(path.dirname(__dirname), 'build')));
+
+
 app.use(morgan("dev"));
 app.use(cors());
 const server = http.createServer(app);
@@ -175,11 +187,19 @@ app.get("/api/createroom", async (req, res) => {
   res.send(data);
 });
 
-app.get(['/api', '/'], (req, res) => {
+app.get('/api', (req, res) => {
   res.send("<h1>Server is working Fine!!🚀</h1>");
 });
 
 //------------------- API Endpoints -------------------
+
+// Render index.html for all other requests
+app.get('*', (req, res) => {
+  // console.log(__dirname);
+  // console.log(path.dirname(__dirname));
+  // console.log(typeof(__dirname))
+  res.sendFile(path.join(path.dirname(__dirname), 'build', 'index.html'));
+});
 
 //------------------- Analyzing and debugging  -------------------
 function funRun() {
