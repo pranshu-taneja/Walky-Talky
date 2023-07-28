@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Link } from "react-router-dom";
 
-// const proxyURL = "https://walky-talky-omega.vercel.app";
-const proxyURL = "http://localhost:3000";
+const proxyURL = "https://walky-talky-omega.vercel.app";
+// const proxyURL = "http://localhost:3000";
 
 function RoomSidebar() {
   const [rooms, setrooms] = useState([]);

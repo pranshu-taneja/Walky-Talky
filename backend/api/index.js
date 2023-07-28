@@ -24,23 +24,13 @@ const newRoom = new Room({
 const app = express();
 config();
 app.use(morgan("dev"));
-
-// custom
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
-  res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
-  next();
-});
-//
 app.use(cors());
 const server = http.createServer(app);
 const port = process.env.PORT;
 const MONGO_URL = process.env.MONGO_URL;
 const io = new Server(server, {
   cors: {
-    origins:'*:*',
+    origins:'http://localhost:5173',
     methods: ["GET", "POST"],
   },
 });

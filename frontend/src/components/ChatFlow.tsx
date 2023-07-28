@@ -13,8 +13,8 @@ export default function ChatFlow() {
   const [RoomActive, setRoomActive] = useState("active");
 
   const { roomId } = useParams();
-  // const proxyURL = "https://walky-talky-omega.vercel.app"
-  const proxyURL = "http://localhost:3000"
+  const proxyURL = "https://walky-talky-omega.vercel.app"
+  // const proxyURL = "http://localhost:3000"
 
   useEffect(() => {
     async function isRoomActive() {
