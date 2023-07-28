@@ -9,9 +9,9 @@ import mongoose from "mongoose";
 import Room from "../models/Rooms.js";
 
 //used for __dirname as in commmon js modules
-import * as url from 'url';
-import path from 'path';
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+// import * as url from 'url';
+// import path from 'path';
+// const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 //------------------- all the variables or containers -------------------
 const ROOM_TIMEOUT = 10000;
@@ -31,8 +31,8 @@ config();
 
 
 
-// adding frontend build
-app.use(express.static(path.join(path.dirname(__dirname), 'build')));
+// // adding frontend build
+// app.use(express.static(path.join(path.dirname(__dirname), 'build')));
 
 
 app.use(morgan("dev"));
@@ -194,12 +194,12 @@ app.get('/api', (req, res) => {
 //------------------- API Endpoints -------------------
 
 // Render index.html for all other requests
-app.get('*', (req, res) => {
-  // console.log(__dirname);
-  // console.log(path.dirname(__dirname));
-  // console.log(typeof(__dirname))
-  res.sendFile(path.join(path.dirname(__dirname), 'build', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   // console.log(__dirname);
+//   // console.log(path.dirname(__dirname));
+//   // console.log(typeof(__dirname))
+//   res.sendFile(path.join(path.dirname(__dirname), 'build', 'index.html'));
+// });
 
 //------------------- Analyzing and debugging  -------------------
 function funRun() {

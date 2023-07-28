@@ -41,7 +41,7 @@ export default function ChatFlow() {
 
   useEffect(() => {
     function connectServer() {
-      const newSocket = io(proxyURL, {transports: ['websocket', 'polling', 'flashsocket']}); // Replace with your server URL
+      const newSocket = io(proxyURL, {transports: ["websocket"]}); // Replace with your server URL
       setSocket(newSocket);
     }
 
