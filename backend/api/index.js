@@ -30,7 +30,7 @@ const port = process.env.PORT;
 const MONGO_URL = process.env.MONGO_URL;
 const io = new Server(server, {
   cors: {
-    origins:'http://localhost:5173',
+    origins:'*:*',
     methods: ["GET", "POST"],
   },
 });
