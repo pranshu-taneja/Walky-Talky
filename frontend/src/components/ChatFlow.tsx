@@ -13,8 +13,7 @@ export default function ChatFlow() {
   const [RoomActive, setRoomActive] = useState("active");
 
   const { roomId } = useParams();
-  const proxyURL = "https://walky-talky-omega.vercel.app"
-  // const proxyURL = "http://localhost:3000"
+  const proxyURL = import.meta.env.VITE_API_SERVER_URL;
 
   useEffect(() => {
     async function isRoomActive() {
@@ -72,7 +71,8 @@ export default function ChatFlow() {
 
   function handleMsg() {
     if (socket) {
-      socket.emit("chatMessage", { room: roomId, message: msg });
+      const CurTimestamp = new Date().toISOString(); 
+      socket.emit("chatMessage", { room: roomId, message: msg, timestamp: CurTimestamp});
       setChat((prevchat) => [...prevchat, msg]);
       setMsg("");
     }
@@ -126,7 +126,7 @@ export default function ChatFlow() {
         RoomJoined ? (
           <button onClick={leaveRoom}>Leave Room</button>
         ) : (
-          <button onClick={JoinRoom}>Join Room</button>
+          <button onClick={JoinRoom}>Join Room👇</button>
         )
       ) : (
         <div>

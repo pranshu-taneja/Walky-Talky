@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Link } from "react-router-dom";
 
-const proxyURL = "https://walky-talky-omega.vercel.app";
-// const proxyURL = "http://localhost:3000";
+const proxyURL = import.meta.env.VITE_API_SERVER_URL;
+
 
 function RoomSidebar() {
   const [rooms, setrooms] = useState([]);
@@ -31,6 +31,7 @@ function RoomSidebar() {
   return (
     <div className="sidebarWrapper">
       <button className="btnCreateRoom" onClick={CreateRoom}>Create Room</button>
+      <button onClick={getRooms}>🔄️</button>
       <div className="RoomsWrapper">
         <ul className="RoomsList">
           {rooms?.map((data: { roomId: string; status: string }) => {

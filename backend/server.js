@@ -6,12 +6,9 @@ import { config } from "dotenv";
 import { v4 as uuidv4 } from "uuid";
 import cors from "cors";
 import mongoose from "mongoose";
-import Room from "../models/Rooms.js";
+import Room from "./models/Rooms.js";
+import fetch from "node-fetch";
 
-//used for __dirname as in commmon js modules
-// import * as url from 'url';
-// import path from 'path';
-// const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 //------------------- all the variables or containers -------------------
 const ROOM_TIMEOUT = 10000;
@@ -30,21 +27,18 @@ const app = express();
 config();
 
 
-
-// // adding frontend build
-// app.use(express.static(path.join(path.dirname(__dirname), 'build')));
-
-
 app.use(morgan("dev"));
 app.use(cors());
 const server = http.createServer(app);
 const port = process.env.PORT;
 const MONGO_URL = process.env.MONGO_URL;
+const BASE_SERVER_URL = process.env.BASE_URL;
 const io = new Server(server, {
   cors: {
     origins:'*:*',
     methods: ["GET", "POST"],
   },
+  allowEIO3:true
 });
 //------------------- Intializing the instance of imports -------------------
 
@@ -54,15 +48,16 @@ io.on("connection", (socket) => {
 
   socket.on("chatMessage", async (data) => {
     try {
-      const { room, message } = data;
-      const roomData = await Room.findOne({ roomId: room });
-      roomData.msg.push({ sender: socket.id, content: message });
-      await roomData.save();
+      const { room, message, timestamp } = data;
       socket.to(room).emit("getChat", { message });
+      const roomData = await Room.findOne({ roomId: room });
+      roomData.msg.push({ sender: socket.id, content: message, timestamp: timestamp });
+      await roomData.save();
     } catch (error) {
       console.error("Error saving message:", error);
     }
   });
+
 
   socket.on("joinRoom", (roomName) => {
     socket.join(roomName);
@@ -110,7 +105,7 @@ io.on("connection", (socket) => {
 
 
 async function DeactivateRoom(roomName) {
-  const res = await fetch(`https://${process.env.VERCEL_URL}/api/killroom/${roomName}`);
+  const res = await fetch(`${BASE_SERVER_URL}/api/killroom/${roomName}`);
   const msg = await res.json();
   console.log(msg);
 }
@@ -191,28 +186,9 @@ app.get('/api', (req, res) => {
   res.send("<h1>Server is working Fine!!🚀</h1>");
 });
 
-//------------------- API Endpoints -------------------
-
-// Render index.html for all other requests
-// app.get('*', (req, res) => {
-//   // console.log(__dirname);
-//   // console.log(path.dirname(__dirname));
-//   // console.log(typeof(__dirname))
-//   res.sendFile(path.join(path.dirname(__dirname), 'build', 'index.html'));
-// });
-
-//------------------- Analyzing and debugging  -------------------
-function funRun() {
-  const room = io.sockets.adapter.rooms;
-  console.log(room);
-  console.log(activeRooms);
-}
-// setInterval(() => {
-//   funRun();
-// }, 3000);
-//------------------- Analyzing and debugging  -------------------
 
 
+//------------------- Connect DB function -------------------
 function connectDB(){
   try{
     mongoose.connect(MONGO_URL,{
