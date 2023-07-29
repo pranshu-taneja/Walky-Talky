@@ -23,7 +23,7 @@ export default function ChatFlow() {
       setRoomActive(isActive);
     }
     isRoomActive();
-  }, [RoomActive, JoinRoom]);
+  }, [RoomActive, RoomJoined, roomId]);
 
   useEffect(() => {
     async function scrollDownChat() {
