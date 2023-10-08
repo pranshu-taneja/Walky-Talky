@@ -12,8 +12,9 @@ function RoomSidebar() {
   async function getRooms() {
     try {
       const res = await fetch(`${proxyURL}/api/getroom`);
+      // "api/getroom" will fetch rooms and "api/createroom" will create a room 
       const data = await res.json();
-      setrooms(data.reverse());
+      setrooms(data.reverse());     //Reverse -- so that when room is created then the new room should be reflected on the top of the list
     } catch (err) {
       console.log("Error Occured:", err);
     }
@@ -37,6 +38,7 @@ function RoomSidebar() {
           {rooms?.map((data: { roomId: string; status: string }) => {
             return (
               <li className="Room" key={uuidv4()} style={{ listStyle: "none" }}>
+                {/* conditional rendering for active and non active room */}
                 {data.status === "active" ? (
                   <p className="activeRoom">
                     <span></span>
@@ -50,7 +52,8 @@ function RoomSidebar() {
                 )}
                 <Link to={`/rooms/${data.roomId}`} style={{ color: "white" }}>
                   <div className="EnterButton">
-                    {data.roomId} <div className="G-ThenLogo">&gt;</div>
+                    {data.roomId} <div className="G-ThenLogo">&gt;</div>      
+                    {/* &gt; is an entity name for ">" */}
                   </div>
                 </Link>
               </li>

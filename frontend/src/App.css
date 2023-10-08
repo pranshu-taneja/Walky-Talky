@@ -67,14 +67,14 @@
   border-radius: 2rem;
   transition: all 0.25s;
 }
-/* 
+
 .wrapper:hover {
   border-width: 5px;
 
   -webkit-box-shadow:0px 0px 187px 20px rgba(45,255,196,0.61);
   -moz-box-shadow: 0px 0px 187px 20px rgba(45,255,196,0.61);
   box-shadow: 0px 0px 187px 20px rgba(45,255,196,0.61);
-} */
+}
 
 .ChatAppContainer{
   display: flex;

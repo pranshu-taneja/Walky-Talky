@@ -15,6 +15,10 @@ function App() {
           <Routes>
             {/* <Route path="/" Component={ChatFlow}></Route> */}
             <Route path="/rooms/:roomId" Component={ChatFlow}></Route>
+            {/* this basically is 
+            --one passing the roomId as a url parameter
+            -- two we will create a dynamic structer/kinda page of the application through this url parameter
+            */}
           </Routes>
         </div>
       </div>
