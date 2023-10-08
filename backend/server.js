@@ -6,7 +6,7 @@ import { config } from "dotenv";
 import { v4 as uuidv4 } from "uuid";
 import cors from "cors";
 import mongoose from "mongoose";
-import Room from "./models/Rooms.js";
+import Room from "./src/models/RoomsModel.js";
 import fetch from "node-fetch";
 import { io as io_client } from "socket.io-client";
 
@@ -27,6 +27,7 @@ config();
 app.use(cors());
 const server = http.createServer(app);
 const port = process.env.PORT;
+console.log(port);
 const MONGO_URL = process.env.MONGO_URL;
 const BASE_SERVER_URL = process.env.BASE_URL;
 const io = new Server(server, {
